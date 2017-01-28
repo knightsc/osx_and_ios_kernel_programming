@@ -1,0 +1,295 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		6F8EC8FA1E2EBE80005DA7AE /* IOKitTest.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 6F8EC8F91E2EBE80005DA7AE /* IOKitTest.hpp */; };
+		6F8EC8FC1E2EBE80005DA7AE /* IOKitTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6F8EC8FB1E2EBE80005DA7AE /* IOKitTest.cpp */; };
+		6FF018EB1E2FE3A80013917C /* IOKitTestUserClient.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6FF018E91E2FE3A80013917C /* IOKitTestUserClient.cpp */; };
+		6FF018EC1E2FE3A80013917C /* IOKitTestUserClient.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 6FF018EA1E2FE3A80013917C /* IOKitTestUserClient.hpp */; };
+		6FF018EE1E3002820013917C /* TestDriverInterface.h in Headers */ = {isa = PBXBuildFile; fileRef = 6FF018ED1E3002820013917C /* TestDriverInterface.h */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		6F8EC8F61E2EBE80005DA7AE /* IOKitTest.kext */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = IOKitTest.kext; sourceTree = BUILT_PRODUCTS_DIR; };
+		6F8EC8F91E2EBE80005DA7AE /* IOKitTest.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = IOKitTest.hpp; sourceTree = "<group>"; };
+		6F8EC8FB1E2EBE80005DA7AE /* IOKitTest.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = IOKitTest.cpp; sourceTree = "<group>"; };
+		6F8EC8FD1E2EBE80005DA7AE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		6FF018E91E2FE3A80013917C /* IOKitTestUserClient.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = IOKitTestUserClient.cpp; sourceTree = "<group>"; };
+		6FF018EA1E2FE3A80013917C /* IOKitTestUserClient.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = IOKitTestUserClient.hpp; sourceTree = "<group>"; };
+		6FF018ED1E3002820013917C /* TestDriverInterface.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestDriverInterface.h; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		6F8EC8F21E2EBE80005DA7AE /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		6F8EC8EC1E2EBE80005DA7AE = {
+			isa = PBXGroup;
+			children = (
+				6F8EC8F81E2EBE80005DA7AE /* IOKitTest */,
+				6F8EC8F71E2EBE80005DA7AE /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		6F8EC8F71E2EBE80005DA7AE /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				6F8EC8F61E2EBE80005DA7AE /* IOKitTest.kext */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		6F8EC8F81E2EBE80005DA7AE /* IOKitTest */ = {
+			isa = PBXGroup;
+			children = (
+				6F8EC8F91E2EBE80005DA7AE /* IOKitTest.hpp */,
+				6F8EC8FB1E2EBE80005DA7AE /* IOKitTest.cpp */,
+				6FF018EA1E2FE3A80013917C /* IOKitTestUserClient.hpp */,
+				6FF018E91E2FE3A80013917C /* IOKitTestUserClient.cpp */,
+				6F8EC8FD1E2EBE80005DA7AE /* Info.plist */,
+				6FF018ED1E3002820013917C /* TestDriverInterface.h */,
+			);
+			path = IOKitTest;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXHeadersBuildPhase section */
+		6F8EC8F31E2EBE80005DA7AE /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				6FF018EE1E3002820013917C /* TestDriverInterface.h in Headers */,
+				6F8EC8FA1E2EBE80005DA7AE /* IOKitTest.hpp in Headers */,
+				6FF018EC1E2FE3A80013917C /* IOKitTestUserClient.hpp in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
+
+/* Begin PBXNativeTarget section */
+		6F8EC8F51E2EBE80005DA7AE /* IOKitTest */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 6F8EC9001E2EBE80005DA7AE /* Build configuration list for PBXNativeTarget "IOKitTest" */;
+			buildPhases = (
+				6F8EC8F11E2EBE80005DA7AE /* Sources */,
+				6F8EC8F21E2EBE80005DA7AE /* Frameworks */,
+				6F8EC8F31E2EBE80005DA7AE /* Headers */,
+				6F8EC8F41E2EBE80005DA7AE /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = IOKitTest;
+			productName = IOKitTest;
+			productReference = 6F8EC8F61E2EBE80005DA7AE /* IOKitTest.kext */;
+			productType = "com.apple.product-type.kernel-extension";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		6F8EC8ED1E2EBE80005DA7AE /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0820;
+				ORGANIZATIONNAME = "Scott Knight";
+				TargetAttributes = {
+					6F8EC8F51E2EBE80005DA7AE = {
+						CreatedOnToolsVersion = 8.2.1;
+						ProvisioningStyle = Automatic;
+					};
+				};
+			};
+			buildConfigurationList = 6F8EC8F01E2EBE80005DA7AE /* Build configuration list for PBXProject "IOKitTest" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = 6F8EC8EC1E2EBE80005DA7AE;
+			productRefGroup = 6F8EC8F71E2EBE80005DA7AE /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				6F8EC8F51E2EBE80005DA7AE /* IOKitTest */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		6F8EC8F41E2EBE80005DA7AE /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		6F8EC8F11E2EBE80005DA7AE /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				6FF018EB1E2FE3A80013917C /* IOKitTestUserClient.cpp in Sources */,
+				6F8EC8FC1E2EBE80005DA7AE /* IOKitTest.cpp in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		6F8EC8FE1E2EBE80005DA7AE /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "-";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.12;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+			};
+			name = Debug;
+		};
+		6F8EC8FF1E2EBE80005DA7AE /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "-";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.12;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
+		6F8EC9011E2EBE80005DA7AE /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1.0.0d1;
+				INFOPLIST_FILE = IOKitTest/Info.plist;
+				MODULE_NAME = com.osxkernel.IOKitTest;
+				MODULE_VERSION = 1.0.0d1;
+				PRODUCT_BUNDLE_IDENTIFIER = com.osxkernel.driver.IOKitTest;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = kext;
+			};
+			name = Debug;
+		};
+		6F8EC9021E2EBE80005DA7AE /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1.0.0d1;
+				INFOPLIST_FILE = IOKitTest/Info.plist;
+				MODULE_NAME = com.osxkernel.IOKitTest;
+				MODULE_VERSION = 1.0.0d1;
+				PRODUCT_BUNDLE_IDENTIFIER = com.osxkernel.driver.IOKitTest;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = kext;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		6F8EC8F01E2EBE80005DA7AE /* Build configuration list for PBXProject "IOKitTest" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				6F8EC8FE1E2EBE80005DA7AE /* Debug */,
+				6F8EC8FF1E2EBE80005DA7AE /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		6F8EC9001E2EBE80005DA7AE /* Build configuration list for PBXNativeTarget "IOKitTest" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				6F8EC9011E2EBE80005DA7AE /* Debug */,
+				6F8EC9021E2EBE80005DA7AE /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 6F8EC8ED1E2EBE80005DA7AE /* Project object */;
+}
