@@ -1,6 +1,6 @@
-#import <Foundation/Foundation.h>
-#import <IOKit/IOKitLib.h>
-#import <IOKit/IOMessage.h>
+#include <Foundation/Foundation.h>
+#include <IOKit/IOKitLib.h>
+#include <IOKit/IOMessage.h>
 
 // Structure to describe a driver instance.
 typedef struct {

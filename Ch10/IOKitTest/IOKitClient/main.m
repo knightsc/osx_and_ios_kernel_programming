@@ -1,5 +1,5 @@
-#import <Foundation/Foundation.h>
-#import "TestDriverInterface.h"
+#include <Foundation/Foundation.h>
+#include "TestDriverInterface.h"
 
 int main(int argc, const char * argv[]) {
     @autoreleasepool {
