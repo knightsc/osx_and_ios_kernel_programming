@@ -1,6 +1,6 @@
-#import <Foundation/Foundation.h>
-#import <IOKit/IOKitLib.h>
-#import "TestDriverInterface.h"
+#include <Foundation/Foundation.h>
+#include <IOKit/IOKitLib.h>
+#include "TestDriverInterface.h"
 
 kern_return_t StartTimer (io_connect_t connection)
 {
