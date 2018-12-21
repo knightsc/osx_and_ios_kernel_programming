@@ -1,11 +1,11 @@
 #include <IOKit/IOLib.h>
-#include <IOKit/IOService.h>
 #include <IOKit/usb/IOUSBHostInterface.h>
-#include "MyFirstUSBDriver.hpp"
+
+#include "MyFirstUSBDriver.h"
 
 #define super IOService
 
-OSDefineMetaClassAndStructors(com_osxkernel_MyFirstUSBDriver, IOService)
+OSDefineMetaClassAndStructors(MyFirstUSBDriver, IOService)
 
 // USB driver
 // example logs
@@ -23,7 +23,7 @@ OSDefineMetaClassAndStructors(com_osxkernel_MyFirstUSBDriver, IOService)
 //com_osxkernel_MyFirstUSBDriver::stop
 //com_osxkernel_MyFirstUSBDriver::detach
 
-void logEndpoint(const EndpointDescriptor* endpoint)
+void logEndpoint(const EndpointDescriptor *endpoint)
 {
     uint8_t epNumber = StandardUSB::getEndpointNumber(endpoint);
     uint8_t epType = StandardUSB::getEndpointType(endpoint);
@@ -60,31 +60,31 @@ void logEndpoint(const EndpointDescriptor* endpoint)
     IOLog("\n");
 }
 
-bool com_osxkernel_MyFirstUSBDriver::init(OSDictionary *propTable)
+bool MyFirstUSBDriver::init(OSDictionary *propTable)
 {
     IOLog("com_osxkernel_MyFirstUSBDriver::init\n");
     return super::init(propTable);
 }
 
-IOService* com_osxkernel_MyFirstUSBDriver::probe(IOService * provider, SInt32 *score)
+IOService* MyFirstUSBDriver::probe(IOService *provider, SInt32 *score)
 {
     IOLog("com_osxkernel_MyFirstUSBDriver::probe\n");
     return super::probe(provider, score);
 }
 
-bool com_osxkernel_MyFirstUSBDriver::attach(IOService* provider)
+bool MyFirstUSBDriver::attach(IOService *provider)
 {
     IOLog("com_osxkernel_MyFirstUSBDriver::attach\n");
     return super::attach(provider);
 }
 
-void com_osxkernel_MyFirstUSBDriver::detach(IOService *provider)
+void MyFirstUSBDriver::detach(IOService *provider)
 {
     IOLog("com_osxkernel_MyFirstUSBDriver::detach\n");
     return super::detach(provider);
 }
 
-bool com_osxkernel_MyFirstUSBDriver::start(IOService *provider)
+bool MyFirstUSBDriver::start(IOService *provider)
 {
     IOUSBHostInterface *interface;
     
@@ -95,19 +95,19 @@ bool com_osxkernel_MyFirstUSBDriver::start(IOService *provider)
     }
     
     interface = OSDynamicCast(IOUSBHostInterface, provider);
-    if (interface == NULL) {
+    if (!interface) {
         IOLog("com_osxkernel_MyFirstUSBDriver::start -> provider not an IOUSBHostInterface\n");
         return false;
     }
     
-    const StandardUSB::ConfigurationDescriptor* configDesc = interface->getConfigurationDescriptor();
-    const StandardUSB::InterfaceDescriptor* ifaceDesc = interface->getInterfaceDescriptor();
+    const StandardUSB::ConfigurationDescriptor *configDesc = interface->getConfigurationDescriptor();
+    const StandardUSB::InterfaceDescriptor *ifaceDesc = interface->getInterfaceDescriptor();
     if (!configDesc || !ifaceDesc) {
         IOLog("com_osxkernel_MyFirstUSBDriver::start -> descriptors not found\n");
         return false;
     }
     
-    const EndpointDescriptor* ep = NULL;
+    const EndpointDescriptor *ep = NULL;
     while ((ep = StandardUSB::getNextEndpointDescriptor(configDesc, ifaceDesc, ep))) {
         logEndpoint(ep);
     }
@@ -115,13 +115,13 @@ bool com_osxkernel_MyFirstUSBDriver::start(IOService *provider)
     return true;
 }
 
-void com_osxkernel_MyFirstUSBDriver::stop(IOService *provider)
+void MyFirstUSBDriver::stop(IOService *provider)
 {
     IOLog("com_osxkernel_MyFirstUSBDriver::stop\n");
     super::stop(provider);
 }
 
-bool com_osxkernel_MyFirstUSBDriver::terminate(IOOptionBits options)
+bool MyFirstUSBDriver::terminate(IOOptionBits options)
 {
     IOLog("com_osxkernel_MyFirstUSBDriver::terminate\n");
     return super::terminate(options);

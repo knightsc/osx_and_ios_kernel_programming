@@ -7,13 +7,13 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		6F6C20571E3B9466003840A6 /* MyFirstUSBDriver.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 6F6C20561E3B9466003840A6 /* MyFirstUSBDriver.hpp */; };
+		6F6C20571E3B9466003840A6 /* MyFirstUSBDriver.h in Headers */ = {isa = PBXBuildFile; fileRef = 6F6C20561E3B9466003840A6 /* MyFirstUSBDriver.h */; };
 		6F6C20591E3B9466003840A6 /* MyFirstUSBDriver.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6F6C20581E3B9466003840A6 /* MyFirstUSBDriver.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		6F6C20531E3B9466003840A6 /* MyFirstUSBDriver.kext */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MyFirstUSBDriver.kext; sourceTree = BUILT_PRODUCTS_DIR; };
-		6F6C20561E3B9466003840A6 /* MyFirstUSBDriver.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = MyFirstUSBDriver.hpp; sourceTree = "<group>"; };
+		6F6C20561E3B9466003840A6 /* MyFirstUSBDriver.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MyFirstUSBDriver.h; sourceTree = "<group>"; };
 		6F6C20581E3B9466003840A6 /* MyFirstUSBDriver.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = MyFirstUSBDriver.cpp; sourceTree = "<group>"; };
 		6F6C205A1E3B9466003840A6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -48,8 +48,8 @@
 		6F6C20551E3B9466003840A6 /* MyFirstUSBDriver */ = {
 			isa = PBXGroup;
 			children = (
-				6F6C20561E3B9466003840A6 /* MyFirstUSBDriver.hpp */,
 				6F6C20581E3B9466003840A6 /* MyFirstUSBDriver.cpp */,
+				6F6C20561E3B9466003840A6 /* MyFirstUSBDriver.h */,
 				6F6C205A1E3B9466003840A6 /* Info.plist */,
 			);
 			path = MyFirstUSBDriver;
@@ -62,7 +62,7 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				6F6C20571E3B9466003840A6 /* MyFirstUSBDriver.hpp in Headers */,
+				6F6C20571E3B9466003840A6 /* MyFirstUSBDriver.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
