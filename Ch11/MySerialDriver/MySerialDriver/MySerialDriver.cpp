@@ -4,35 +4,34 @@
 #include <IOKit/usb/IOUSBHostInterface.h>
 
 #include <IOKit/serial/IOSerialKeys.h>
-#include <IOKit/serial/IOSerialDriverSync.h>
 #include <IOKit/serial/IOModemSerialStreamSync.h>
 
-#include "MySerialDriver.hpp"
+#include "MySerialDriver.h"
 
 #define super IOSerialDriverSync
 
-OSDefineMetaClassAndStructors(com_osxkernel_MySerialDriver, IOSerialDriverSync);
+OSDefineMetaClassAndStructors(MySerialDriver, IOSerialDriverSync);
 
-bool com_osxkernel_MySerialDriver::createSerialStream()
+bool MySerialDriver::createSerialStream()
 {
     IOSerialStreamSync *pChild;
     bool result;
     
     // Instantiate the child driver object
     pChild = new IOModemSerialStreamSync;
-    if (pChild == NULL) {
+    if (!pChild) {
         return false;
     }
     
     // Initialize the child driver
     result = pChild->init(0, 0);
-    if (result == false) {
+    if (!result) {
         goto bail;
     }
     
     // Attach pChild as a child device of ourself
     result = pChild->attach(this);
-    if (result == false) {
+    if (!result) {
         goto bail;
     }
 
@@ -49,7 +48,7 @@ bail:
     return result;
 }
 
-IOService *com_osxkernel_MySerialDriver::probe(IOService *provider, SInt32 *score)
+IOService *MySerialDriver::probe(IOService *provider, SInt32 *score)
 {
     IOService *res;
     
@@ -59,7 +58,7 @@ IOService *com_osxkernel_MySerialDriver::probe(IOService *provider, SInt32 *scor
     
 }
 
-bool com_osxkernel_MySerialDriver::start(IOService *provider)
+bool MySerialDriver::start(IOService *provider)
 {
     if (!super::start(provider)) {
         return false;
@@ -95,12 +94,25 @@ bool com_osxkernel_MySerialDriver::start(IOService *provider)
     return true;
 }
 
-void com_osxkernel_MySerialDriver::stop(IOService *provider)
+void MySerialDriver::stop(IOService *provider)
 {
+    fCommandGate->disable();
+    
+    if (fWorkLoop) {
+        fWorkLoop->release();
+        fWorkLoop = NULL;
+    }
+    
+    if (fInterface) {
+        fInterface->close(this);
+        fInterface->release();
+        fInterface = NULL;
+    }
+    
     super::stop(provider);
 }
 
-IOReturn com_osxkernel_MySerialDriver::acquirePort(bool sleep, void *refCon)
+IOReturn MySerialDriver::acquirePort(bool sleep, void *refCon)
 {
     IOReturn ret;
     if (!fWorkLoop) {
@@ -114,12 +126,12 @@ IOReturn com_osxkernel_MySerialDriver::acquirePort(bool sleep, void *refCon)
     return ret;
 }
 
-IOReturn com_osxkernel_MySerialDriver::acquirePortAction(OSObject *owner, void *arg0, void *arg1, void *, void *)
+IOReturn MySerialDriver::acquirePortAction(OSObject *owner, void *arg0, void *arg1, void *, void *)
 {
-    return ((com_osxkernel_MySerialDriver *)owner)->acquirePortGated((bool)arg0, arg1);
+    return ((MySerialDriver *)owner)->acquirePortGated((bool)arg0, arg1);
 }
 
-IOReturn com_osxkernel_MySerialDriver::acquirePortGated(bool sleep, void *refCon)
+IOReturn MySerialDriver::acquirePortGated(bool sleep, void *refCon)
 {
     UInt32 state;
     IOReturn ret;
@@ -143,7 +155,7 @@ IOReturn com_osxkernel_MySerialDriver::acquirePortGated(bool sleep, void *refCon
     return kIOReturnSuccess;
 }
 
-IOReturn com_osxkernel_MySerialDriver::releasePort(void *refCon)
+IOReturn MySerialDriver::releasePort(void *refCon)
 {
     IOReturn ret = kIOReturnSuccess;
     
@@ -152,13 +164,13 @@ IOReturn com_osxkernel_MySerialDriver::releasePort(void *refCon)
     return ret;
 }
 
-IOReturn com_osxkernel_MySerialDriver::releasePortAction(OSObject *owner, void *arg0, void *, void *, void *)
+IOReturn MySerialDriver::releasePortAction(OSObject *owner, void *arg0, void *, void *, void *)
 {
     // Call through to the method releasePortGated()
-    return ((com_osxkernel_MySerialDriver*)owner)->releasePortGated(arg0);
+    return ((MySerialDriver *)owner)->releasePortGated(arg0);
 }
 
-IOReturn com_osxkernel_MySerialDriver::releasePortGated(void *refCon)
+IOReturn MySerialDriver::releasePortGated(void *refCon)
 {
     // Return an error if trying to release a port that hasn’t been acquired
     if ((m_currentState & PD_S_ACQUIRED) == 0) {
@@ -171,7 +183,7 @@ IOReturn com_osxkernel_MySerialDriver::releasePortGated(void *refCon)
     return kIOReturnSuccess;
 }
 
-UInt32 com_osxkernel_MySerialDriver::getState(void *refCon)
+UInt32 MySerialDriver::getState(void *refCon)
 {
     UInt32 currState;
     
@@ -182,16 +194,16 @@ UInt32 com_osxkernel_MySerialDriver::getState(void *refCon)
     return currState;
 }
 
-IOReturn com_osxkernel_MySerialDriver::getStateAction(OSObject *owner, void *, void *, void *, void *)
+IOReturn MySerialDriver::getStateAction(OSObject *owner, void *, void *, void *, void *)
 {
     UInt32 newState;
     
-    newState = ((com_osxkernel_MySerialDriver *)owner)->getStateGated();
+    newState = ((MySerialDriver *)owner)->getStateGated();
     
     return newState;
 }
 
-UInt32 com_osxkernel_MySerialDriver::getStateGated()
+UInt32 MySerialDriver::getStateGated()
 {
     UInt32 state;
     
@@ -200,7 +212,7 @@ UInt32 com_osxkernel_MySerialDriver::getStateGated()
     return state;
 }
 
-IOReturn com_osxkernel_MySerialDriver::setState(UInt32 state, UInt32 mask, void *refCon)
+IOReturn MySerialDriver::setState(UInt32 state, UInt32 mask, void *refCon)
 {
     IOReturn ret = kIOReturnSuccess;
 
@@ -211,12 +223,12 @@ IOReturn com_osxkernel_MySerialDriver::setState(UInt32 state, UInt32 mask, void 
     return ret;
 }
 
-IOReturn com_osxkernel_MySerialDriver::setStateAction(OSObject *owner, void *arg0, void *arg1, void *, void *)
+IOReturn MySerialDriver::setStateAction(OSObject *owner, void *arg0, void *arg1, void *, void *)
 {
-    return ((com_osxkernel_MySerialDriver *)owner)->setStateGated((UInt32 *)arg0, (UInt32 *)arg1);
+    return ((MySerialDriver *)owner)->setStateGated((UInt32 *)arg0, (UInt32 *)arg1);
 }
 
-IOReturn com_osxkernel_MySerialDriver::setStateGated(UInt32 *pState, UInt32 *pMask)
+IOReturn MySerialDriver::setStateGated(UInt32 *pState, UInt32 *pMask)
 {
     UInt32 state = *pState;
     UInt32 mask = *pMask;
@@ -224,8 +236,7 @@ IOReturn com_osxkernel_MySerialDriver::setStateGated(UInt32 *pState, UInt32 *pMa
     UInt32 deltaState;
     
     // Verify that the serial port has been acquired or is being acquired by this call
-    if ((m_currentState & PD_S_ACQUIRED) || (state & PD_S_ACQUIRED))
-    {
+    if ((m_currentState & PD_S_ACQUIRED) || (state & PD_S_ACQUIRED)) {
         // Compute the new state
         newState = (m_currentState & ~mask) | (state & mask);
         // Determine the mask of changed state bits
@@ -234,8 +245,7 @@ IOReturn com_osxkernel_MySerialDriver::setStateGated(UInt32 *pState, UInt32 *pMa
         m_currentState = newState;
         // If any state that is being observed by a thread in watchState() has changed,
         // wake up all threads asleep on watchState()
-        if (deltaState & m_watchStateMask)
-        {
+        if (deltaState & m_watchStateMask) {
             // Reset watchStateMask; it will be regenerated as each watchStateGated()
             // sleeps
             m_watchStateMask = 0;
@@ -246,7 +256,7 @@ IOReturn com_osxkernel_MySerialDriver::setStateGated(UInt32 *pState, UInt32 *pMa
     return kIOReturnNotOpen;
 }
 
-IOReturn com_osxkernel_MySerialDriver::watchState(UInt32 *state, UInt32 mask, void *refCon)
+IOReturn MySerialDriver::watchState(UInt32 *state, UInt32 mask, void *refCon)
 {
     IOReturn ret;
     
@@ -265,12 +275,12 @@ IOReturn com_osxkernel_MySerialDriver::watchState(UInt32 *state, UInt32 mask, vo
     return ret;
 }
 
-IOReturn com_osxkernel_MySerialDriver::watchStateAction(OSObject *owner, void *arg0, void *arg1, void *, void *)
+IOReturn MySerialDriver::watchStateAction(OSObject *owner, void *arg0, void *arg1, void *, void *)
 {
-    return ((com_osxkernel_MySerialDriver *)owner)->watchStateGated((UInt32 *)arg0, (UInt32 *)arg1);
+    return ((MySerialDriver *)owner)->watchStateGated((UInt32 *)arg0, (UInt32 *)arg1);
 }
 
-IOReturn com_osxkernel_MySerialDriver::watchStateGated(UInt32 *state, UInt32 *pMask)
+IOReturn MySerialDriver::watchStateGated(UInt32 *state, UInt32 *pMask)
 {
     UInt32 mask = *pMask;
     UInt32 watchState;
@@ -309,7 +319,7 @@ IOReturn com_osxkernel_MySerialDriver::watchStateGated(UInt32 *state, UInt32 *pM
         // Add the bits we are sleeping on to watchStateMask
         m_watchStateMask |= mask;
         // Sleep until the serial port state changes
-        ret = fCommandGate->commandSleep((void*)&m_currentState);
+        ret = fCommandGate->commandSleep((void *)&m_currentState);
     
         if (ret == THREAD_INTERRUPTED) {
             return kIOReturnAborted;
@@ -319,37 +329,37 @@ IOReturn com_osxkernel_MySerialDriver::watchStateGated(UInt32 *state, UInt32 *pM
     return kIOReturnSuccess;
 }
 
-UInt32 com_osxkernel_MySerialDriver::nextEvent(void *refCon)
+UInt32 MySerialDriver::nextEvent(void *refCon)
 {
     return kIOReturnSuccess;
 }
 
-IOReturn com_osxkernel_MySerialDriver::executeEvent(UInt32 event, UInt32 data, void *refCon)
+IOReturn MySerialDriver::executeEvent(UInt32 event, UInt32 data, void *refCon)
 {
     return kIOReturnSuccess;
 }
 
-IOReturn com_osxkernel_MySerialDriver::requestEvent(UInt32 event, UInt32 *data, void *refCon)
+IOReturn MySerialDriver::requestEvent(UInt32 event, UInt32 *data, void *refCon)
 {
     return kIOReturnSuccess;
 }
 
-IOReturn com_osxkernel_MySerialDriver::enqueueEvent(UInt32 event, UInt32 data, bool sleep, void *refCon)
+IOReturn MySerialDriver::enqueueEvent(UInt32 event, UInt32 data, bool sleep, void *refCon)
 {
     return kIOReturnSuccess;
 }
 
-IOReturn com_osxkernel_MySerialDriver::dequeueEvent(UInt32 *event, UInt32 *data, bool sleep, void *refCon)
+IOReturn MySerialDriver::dequeueEvent(UInt32 *event, UInt32 *data, bool sleep, void *refCon)
 {
     return kIOReturnSuccess;
 }
 
-IOReturn com_osxkernel_MySerialDriver::enqueueData(UInt8 *buffer, UInt32 size, UInt32 * count, bool sleep, void *refCon)
+IOReturn MySerialDriver::enqueueData(UInt8 *buffer, UInt32 size, UInt32 *count, bool sleep, void *refCon)
 {
     return kIOReturnSuccess;
 }
 
-IOReturn com_osxkernel_MySerialDriver::dequeueData(UInt8 *buffer, UInt32 size, UInt32 *count, UInt32 min, void *refCon)
+IOReturn MySerialDriver::dequeueData(UInt8 *buffer, UInt32 size, UInt32 *count, UInt32 min, void *refCon)
 {
     return kIOReturnSuccess;
 }

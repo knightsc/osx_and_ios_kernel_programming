@@ -1,13 +1,12 @@
-#include "MyAudioDevice.hpp"
+#include <IOKit/IOLib.h>
 
 #include <IOKit/audio/IOAudioControl.h>
 #include <IOKit/audio/IOAudioLevelControl.h>
 #include <IOKit/audio/IOAudioToggleControl.h>
 #include <IOKit/audio/IOAudioDefines.h>
 
-#include "MyAudioEngine.hpp"
-
-#include <IOKit/IOLib.h>
+#include "MyAudioDevice.h"
+#include "MyAudioEngine.h"
 
 #define super IOAudioDevice
 
@@ -19,15 +18,17 @@ bool MyAudioDevice::initHardware(IOService *provider)
     
     IOLog("MyAudioDevice[%p]::initHardware(%p)\n", this, provider);
     
-    if (!super::initHardware(provider))
+    if (!super::initHardware(provider)) {
         goto done;
+    }
     
     setDeviceName("My Audio Device");
     setDeviceShortName("MyAudioDevice");
     setManufacturerName("osxkernel.com");
     
-    if (!createAudioEngine())
+    if (!createAudioEngine()) {
         goto done;
+    }
     
     result = true;
     
@@ -56,11 +57,13 @@ bool MyAudioDevice::createAudioEngine()
     IOAudioControl *control;
     
     audioEngine = new MyAudioEngine();
-    if (!audioEngine)
+    if (!audioEngine) {
         goto done;
+    }
     
-    if (!audioEngine->init(NULL))
+    if (!audioEngine->init(NULL)) {
         goto done;
+    }
     
     control = CREATE_VOLUME_CONTROL(kIOAudioControlChannelIDDefaultLeft, kIOAudioControlChannelNameLeft, kIOAudioControlUsageOutput);
     ADD_CONTROL(control, volumeChangeHandler)
@@ -98,16 +101,21 @@ IOReturn MyAudioDevice::volumeChangeHandler(OSObject *target, IOAudioControl *vo
     IOReturn result = kIOReturnBadArgument;
     MyAudioDevice *audioDevice;
     audioDevice = (MyAudioDevice *)target;
-    if (audioDevice)
+    
+    if (audioDevice) {
         result = audioDevice->volumeChanged(volumeControl, oldValue, newValue);
+    }
+    
     return result;
 }
 
 IOReturn MyAudioDevice::volumeChanged(IOAudioControl *volumeControl, SInt32 oldValue, SInt32 newValue)
 {
     IOLog("MyAudioDevice[%p]::volumeChanged(%p, %d, %d)\n", this, volumeControl, (int)oldValue, (int)newValue);
-    if (volumeControl)
+    
+    if (volumeControl) {
         IOLog("\t-> Channel %u\n", (unsigned int)volumeControl->getChannelID());
+    }
     
     return kIOReturnSuccess;
 }
@@ -117,7 +125,7 @@ IOReturn MyAudioDevice::outputMuteChangeHandler(OSObject *target, IOAudioControl
     IOReturn result = kIOReturnBadArgument;
     MyAudioDevice *audioDevice;
     
-    audioDevice = (MyAudioDevice*)target;
+    audioDevice = (MyAudioDevice *)target;
     if (audioDevice) {
         result = audioDevice->outputMuteChanged(muteControl, oldValue, newValue);
     }

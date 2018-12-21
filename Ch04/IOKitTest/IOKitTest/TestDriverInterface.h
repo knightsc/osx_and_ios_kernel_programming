@@ -1,8 +1,7 @@
-#ifndef TestDriverInterface_h
-#define TestDriverInterface_h
+#ifndef TESTDRIVERINTERFACE_H
+#define TESTDRIVERINTERFACE_H
 
-typedef struct TimerValue
-{
+typedef struct TimerValue {
     uint64_t        time;
     uint64_t        timebase;
 } TimerValue;
@@ -18,4 +17,4 @@ enum TimerRequestCode {
         kTestUserClientMethodCount
 };
 
-#endif /* TestDriverInterface_h */
+#endif /* TESTDRIVERINTERFACE_H */

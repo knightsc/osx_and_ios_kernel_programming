@@ -9,17 +9,16 @@ typedef struct {
 } MyDriverData;
 
 // Notification port used for both device arrival and driver state changes.
-IONotificationPortRef   gNotificationPort = NULL;
+IONotificationPortRef gNotificationPort = NULL;
 
-void DeviceNotification (void* refCon, io_service_t service, natural_t messageType,
-                         void* messageArgument)
+void DeviceNotification(void *refCon, io_service_t service, natural_t messageType,
+                        void *messageArgument)
 {
-    MyDriverData* myDriverData = (MyDriverData*)refCon;
+    MyDriverData *myDriverData = (MyDriverData *)refCon;
     kern_return_t kr;
     
     // Only handle driver termination notifications.
-    if (messageType == kIOMessageServiceIsTerminated)
-    {
+    if (messageType == kIOMessageServiceIsTerminated) {
         // Print the name of the removed device.
         io_name_t name;
         IORegistryEntryGetName(service, name);
@@ -37,20 +36,18 @@ void DeviceNotification (void* refCon, io_service_t service, natural_t messageTy
     }
 }
 
-void DeviceAdded (void* refCon, io_iterator_t iterator)
+void DeviceAdded(void *refCon, io_iterator_t iterator)
 {
     io_service_t service = 0;
     
     // Iterate over all matching objects.
-    while ((service = IOIteratorNext(iterator)) != 0)
-    {
+    while ((service = IOIteratorNext(iterator)) != 0) {
         CFStringRef className;
         io_name_t name;
         
         // List all IOUSBDevice objects, ignoring objects that subclass IOUSBDevice.
         className = IOObjectCopyClass(service);
-        if (CFEqual(className, CFSTR("IOUSBDevice")) == true)
-        {
+        if (CFEqual(className, CFSTR("IOUSBDevice"))) {
             IORegistryEntryGetName(service, name);
             printf("Found device with name: %s\n", name);
             
@@ -59,11 +56,11 @@ void DeviceAdded (void* refCon, io_iterator_t iterator)
             vendorName = IORegistryEntryCreateCFProperty(service, CFSTR("USB Vendor Name"), kCFAllocatorDefault, 0);
             CFShow(vendorName);
             
-            MyDriverData* myDriverData;
+            MyDriverData *myDriverData;
             kern_return_t kr;
             
             // Allocate a structure to hold the driver instance.
-            myDriverData = (MyDriverData*)malloc(sizeof(MyDriverData));
+            myDriverData = (MyDriverData *)malloc(sizeof(MyDriverData));
             
             // Save the io_service_t for this driver instance.
             myDriverData->service = service;
@@ -81,7 +78,8 @@ void DeviceAdded (void* refCon, io_iterator_t iterator)
     }
 }
 
-int main(int argc, const char * argv[]) {
+int main(int argc, const char * argv[])
+{
     @autoreleasepool {
         CFDictionaryRef matchingDict = NULL;
         io_iterator_t iter = 0;

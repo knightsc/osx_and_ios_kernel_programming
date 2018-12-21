@@ -7,13 +7,13 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		6FC7137821C3EE24001B2860 /* MySerialDriver.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 6FC7137721C3EE24001B2860 /* MySerialDriver.hpp */; };
+		6FC7137821C3EE24001B2860 /* MySerialDriver.h in Headers */ = {isa = PBXBuildFile; fileRef = 6FC7137721C3EE24001B2860 /* MySerialDriver.h */; };
 		6FC7137A21C3EE24001B2860 /* MySerialDriver.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6FC7137921C3EE24001B2860 /* MySerialDriver.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		6FC7137421C3EE24001B2860 /* MySerialDriver.kext */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MySerialDriver.kext; sourceTree = BUILT_PRODUCTS_DIR; };
-		6FC7137721C3EE24001B2860 /* MySerialDriver.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = MySerialDriver.hpp; sourceTree = "<group>"; };
+		6FC7137721C3EE24001B2860 /* MySerialDriver.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MySerialDriver.h; sourceTree = "<group>"; };
 		6FC7137921C3EE24001B2860 /* MySerialDriver.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = MySerialDriver.cpp; sourceTree = "<group>"; };
 		6FC7137B21C3EE24001B2860 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -48,8 +48,8 @@
 		6FC7137621C3EE24001B2860 /* MySerialDriver */ = {
 			isa = PBXGroup;
 			children = (
-				6FC7137721C3EE24001B2860 /* MySerialDriver.hpp */,
 				6FC7137921C3EE24001B2860 /* MySerialDriver.cpp */,
+				6FC7137721C3EE24001B2860 /* MySerialDriver.h */,
 				6FC7137B21C3EE24001B2860 /* Info.plist */,
 			);
 			path = MySerialDriver;
@@ -62,7 +62,7 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				6FC7137821C3EE24001B2860 /* MySerialDriver.hpp in Headers */,
+				6FC7137821C3EE24001B2860 /* MySerialDriver.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

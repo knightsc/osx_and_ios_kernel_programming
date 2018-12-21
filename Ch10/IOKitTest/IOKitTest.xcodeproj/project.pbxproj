@@ -9,12 +9,12 @@
 /* Begin PBXBuildFile section */
 		6F2DF6491E424C020004F37E /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 6F2DF6481E424C020004F37E /* main.m */; };
 		6F2DF64F1E424C370004F37E /* TestDriverInterface.h in Headers */ = {isa = PBXBuildFile; fileRef = 6F2DF64E1E424C370004F37E /* TestDriverInterface.h */; };
-		6F8EC8FA1E2EBE80005DA7AE /* IOKitTest.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 6F8EC8F91E2EBE80005DA7AE /* IOKitTest.hpp */; };
+		6F8EC8FA1E2EBE80005DA7AE /* IOKitTest.h in Headers */ = {isa = PBXBuildFile; fileRef = 6F8EC8F91E2EBE80005DA7AE /* IOKitTest.h */; };
 		6F8EC8FC1E2EBE80005DA7AE /* IOKitTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6F8EC8FB1E2EBE80005DA7AE /* IOKitTest.cpp */; };
 		6FC7136721C19965001B2860 /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6FC7136621C19965001B2860 /* CoreFoundation.framework */; };
 		6FC7136921C1996B001B2860 /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6FC7136821C1996A001B2860 /* IOKit.framework */; };
 		6FF018EB1E2FE3A80013917C /* IOKitTestUserClient.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6FF018E91E2FE3A80013917C /* IOKitTestUserClient.cpp */; };
-		6FF018EC1E2FE3A80013917C /* IOKitTestUserClient.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 6FF018EA1E2FE3A80013917C /* IOKitTestUserClient.hpp */; };
+		6FF018EC1E2FE3A80013917C /* IOKitTestUserClient.h in Headers */ = {isa = PBXBuildFile; fileRef = 6FF018EA1E2FE3A80013917C /* IOKitTestUserClient.h */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -34,13 +34,13 @@
 		6F2DF6481E424C020004F37E /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		6F2DF64E1E424C370004F37E /* TestDriverInterface.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestDriverInterface.h; sourceTree = "<group>"; };
 		6F8EC8F61E2EBE80005DA7AE /* IOKitTest.kext */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = IOKitTest.kext; sourceTree = BUILT_PRODUCTS_DIR; };
-		6F8EC8F91E2EBE80005DA7AE /* IOKitTest.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = IOKitTest.hpp; sourceTree = "<group>"; };
+		6F8EC8F91E2EBE80005DA7AE /* IOKitTest.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IOKitTest.h; sourceTree = "<group>"; };
 		6F8EC8FB1E2EBE80005DA7AE /* IOKitTest.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = IOKitTest.cpp; sourceTree = "<group>"; };
 		6F8EC8FD1E2EBE80005DA7AE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		6FC7136621C19965001B2860 /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = System/Library/Frameworks/CoreFoundation.framework; sourceTree = SDKROOT; };
 		6FC7136821C1996A001B2860 /* IOKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IOKit.framework; path = System/Library/Frameworks/IOKit.framework; sourceTree = SDKROOT; };
 		6FF018E91E2FE3A80013917C /* IOKitTestUserClient.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = IOKitTestUserClient.cpp; sourceTree = "<group>"; };
-		6FF018EA1E2FE3A80013917C /* IOKitTestUserClient.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = IOKitTestUserClient.hpp; sourceTree = "<group>"; };
+		6FF018EA1E2FE3A80013917C /* IOKitTestUserClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IOKitTestUserClient.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -93,10 +93,10 @@
 		6F8EC8F81E2EBE80005DA7AE /* IOKitTest */ = {
 			isa = PBXGroup;
 			children = (
-				6F8EC8F91E2EBE80005DA7AE /* IOKitTest.hpp */,
 				6F8EC8FB1E2EBE80005DA7AE /* IOKitTest.cpp */,
-				6FF018EA1E2FE3A80013917C /* IOKitTestUserClient.hpp */,
+				6F8EC8F91E2EBE80005DA7AE /* IOKitTest.h */,
 				6FF018E91E2FE3A80013917C /* IOKitTestUserClient.cpp */,
+				6FF018EA1E2FE3A80013917C /* IOKitTestUserClient.h */,
 				6F2DF64E1E424C370004F37E /* TestDriverInterface.h */,
 				6F8EC8FD1E2EBE80005DA7AE /* Info.plist */,
 			);
@@ -120,8 +120,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				6F2DF64F1E424C370004F37E /* TestDriverInterface.h in Headers */,
-				6F8EC8FA1E2EBE80005DA7AE /* IOKitTest.hpp in Headers */,
-				6FF018EC1E2FE3A80013917C /* IOKitTestUserClient.hpp in Headers */,
+				6F8EC8FA1E2EBE80005DA7AE /* IOKitTest.h in Headers */,
+				6FF018EC1E2FE3A80013917C /* IOKitTestUserClient.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

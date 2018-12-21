@@ -7,19 +7,19 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		6FC7138F21C83834001B2860 /* MyAudioDevice.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 6FC7138E21C83834001B2860 /* MyAudioDevice.hpp */; };
+		6FC7138F21C83834001B2860 /* MyAudioDevice.h in Headers */ = {isa = PBXBuildFile; fileRef = 6FC7138E21C83834001B2860 /* MyAudioDevice.h */; };
 		6FC7139121C83834001B2860 /* MyAudioDevice.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6FC7139021C83834001B2860 /* MyAudioDevice.cpp */; };
 		6FC7139A21C838C9001B2860 /* MyAudioEngine.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6FC7139821C838C9001B2860 /* MyAudioEngine.cpp */; };
-		6FC7139B21C838C9001B2860 /* MyAudioEngine.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 6FC7139921C838C9001B2860 /* MyAudioEngine.hpp */; };
+		6FC7139B21C838C9001B2860 /* MyAudioEngine.h in Headers */ = {isa = PBXBuildFile; fileRef = 6FC7139921C838C9001B2860 /* MyAudioEngine.h */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		6FC7138B21C83834001B2860 /* MyAudioDevice.kext */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MyAudioDevice.kext; sourceTree = BUILT_PRODUCTS_DIR; };
-		6FC7138E21C83834001B2860 /* MyAudioDevice.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = MyAudioDevice.hpp; sourceTree = "<group>"; };
+		6FC7138E21C83834001B2860 /* MyAudioDevice.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MyAudioDevice.h; sourceTree = "<group>"; };
 		6FC7139021C83834001B2860 /* MyAudioDevice.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = MyAudioDevice.cpp; sourceTree = "<group>"; };
 		6FC7139221C83834001B2860 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		6FC7139821C838C9001B2860 /* MyAudioEngine.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = MyAudioEngine.cpp; sourceTree = "<group>"; };
-		6FC7139921C838C9001B2860 /* MyAudioEngine.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = MyAudioEngine.hpp; sourceTree = "<group>"; };
+		6FC7139921C838C9001B2860 /* MyAudioEngine.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MyAudioEngine.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -52,10 +52,10 @@
 		6FC7138D21C83834001B2860 /* MyAudioDevice */ = {
 			isa = PBXGroup;
 			children = (
-				6FC7138E21C83834001B2860 /* MyAudioDevice.hpp */,
 				6FC7139021C83834001B2860 /* MyAudioDevice.cpp */,
-				6FC7139921C838C9001B2860 /* MyAudioEngine.hpp */,
+				6FC7138E21C83834001B2860 /* MyAudioDevice.h */,
 				6FC7139821C838C9001B2860 /* MyAudioEngine.cpp */,
+				6FC7139921C838C9001B2860 /* MyAudioEngine.h */,
 				6FC7139221C83834001B2860 /* Info.plist */,
 			);
 			path = MyAudioDevice;
@@ -68,8 +68,8 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				6FC7138F21C83834001B2860 /* MyAudioDevice.hpp in Headers */,
-				6FC7139B21C838C9001B2860 /* MyAudioEngine.hpp in Headers */,
+				6FC7138F21C83834001B2860 /* MyAudioDevice.h in Headers */,
+				6FC7139B21C838C9001B2860 /* MyAudioEngine.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

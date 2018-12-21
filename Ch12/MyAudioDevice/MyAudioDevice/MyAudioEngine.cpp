@@ -1,7 +1,7 @@
 #include <IOKit/IOLib.h>
 #include <IOKit/IOTimerEventSource.h>
 
-#include "MyAudioEngine.hpp"
+#include "MyAudioEngine.h"
 
 #define kAudioSampleRate    48000
 #define kAudioNumChannels   2
@@ -28,19 +28,23 @@ bool MyAudioEngine::initHardware(IOService *provider)
     
     IOLog("MyAudioEngine[%p]::initHardware(%p)\n", this, provider);
     
-    if (!super::initHardware(provider))
+    if (!super::initHardware(provider)) {
         goto done;
+    }
     
     fAudioInterruptSource = IOTimerEventSource::timerEventSource(this, interruptOccured);
-    if (!fAudioInterruptSource)
+    if (!fAudioInterruptSource) {
         return false;
+    }
     
     workLoop = getWorkLoop();
-    if (!workLoop)
+    if (!workLoop) {
         return false;
+    }
     
-    if (workLoop->addEventSource(fAudioInterruptSource) != kIOReturnSuccess)
+    if (workLoop->addEventSource(fAudioInterruptSource) != kIOReturnSuccess) {
         return false;
+    }
     
     // Setup the initial sample rate for the audio engine
     initialSampleRate.whole = kAudioSampleRate;
@@ -55,24 +59,28 @@ bool MyAudioEngine::initHardware(IOService *provider)
     setOutputSampleOffset(kAudioSampleRate / kAudioInterruptHZ);
     
     fOutputBuffer = (SInt16 *)IOMalloc(kAudioSampleBufferSize);
-    if (!fOutputBuffer)
+    if (!fOutputBuffer) {
         goto done;
+    }
     
     fInputBuffer = (SInt16 *)IOMalloc(kAudioSampleBufferSize);
-    if (!fInputBuffer)
+    if (!fInputBuffer) {
         goto done;
+    }
     
     // Create an IOAudioStream for each buffer and add it to this audio engine
     audioStream = createNewAudioStream(kIOAudioStreamDirectionOutput, fOutputBuffer, kAudioSampleBufferSize);
-    if (!audioStream)
+    if (!audioStream) {
         goto done;
+    }
     
     addAudioStream(audioStream);
     audioStream->release();
     
     audioStream = createNewAudioStream(kIOAudioStreamDirectionInput, fInputBuffer, kAudioSampleBufferSize);
-    if (!audioStream)
+    if (!audioStream) {
         goto done;
+    }
     
     addAudioStream(audioStream);
     audioStream->release();
@@ -96,8 +104,7 @@ void MyAudioEngine::free()
         fInputBuffer = NULL;
     }
     
-    if (fAudioInterruptSource)
-    {
+    if (fAudioInterruptSource) {
         fAudioInterruptSource->release();
         fAudioInterruptSource = NULL;
     }
@@ -141,8 +148,7 @@ void MyAudioEngine::stop(IOService *provider)
 {
     IOLog("MyAudioEngine[%p]::stop(%p)\n", this, provider);
     
-    if (fAudioInterruptSource)
-    {
+    if (fAudioInterruptSource) {
         fAudioInterruptSource->cancelTimeout();
         getWorkLoop()->removeEventSource(fAudioInterruptSource);
     }
@@ -274,18 +280,20 @@ IOReturn MyAudioEngine::convertInputSamples(const void *sampleBuf, void *destBuf
     return kIOReturnSuccess;
 }
 
-void MyAudioEngine::interruptOccured(OSObject* owner, IOTimerEventSource* sender)
+void MyAudioEngine::interruptOccured(OSObject *owner, IOTimerEventSource *sender)
 {
-    UInt64      thisTimeNS;
-    uint64_t    time;
-    SInt64      diff;
+    UInt64 thisTimeNS;
+    uint64_t time;
+    SInt64 diff;
     
-    MyAudioEngine* audioEngine = (MyAudioEngine*)owner;
+    MyAudioEngine *audioEngine = (MyAudioEngine *)owner;
     
-    if (audioEngine)
+    if (audioEngine) {
         audioEngine->handleAudioInterrupt();
-    if (!sender)
+    }
+    if (!sender) {
         return;
+    }
     
     clock_get_uptime(&time);
     absolutetime_to_nanoseconds(time, &thisTimeNS);
@@ -301,14 +309,13 @@ void MyAudioEngine::handleAudioInterrupt()
     UInt32 samplesBytesPerInterrupt = (kAudioSampleRate / kAudioInterruptHZ) * (kAudioSampleWidth/8) * kAudioNumChannels;
     UInt32 byteOffsetInBuffer = bufferPosition * samplesBytesPerInterrupt;
     
-    UInt8* inputBuf = (UInt8*)fInputBuffer + byteOffsetInBuffer;
-    UInt8* outputBuf = (UInt8*)fOutputBuffer + byteOffsetInBuffer;
+    UInt8 *inputBuf = (UInt8 *)fInputBuffer + byteOffsetInBuffer;
+    UInt8 *outputBuf = (UInt8 *)fOutputBuffer + byteOffsetInBuffer;
     
     // Copy samples from the output buffer to the input buffer.
     bcopy(outputBuf, inputBuf, samplesBytesPerInterrupt);
     // Tell the buffer to wrap
-    if (bufferPosition == 0)
-    {
+    if (bufferPosition == 0) {
         takeTimeStamp();
         // Wrap
     }

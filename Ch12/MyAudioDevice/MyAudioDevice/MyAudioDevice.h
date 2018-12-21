@@ -1,5 +1,5 @@
-#ifndef _MYAUDIODEVICE_H__
-#define _MYAUDIODEVICE_H__
+#ifndef MYAUDIODEVICE_H
+#define MYAUDIODEVICE_H
 
 #include <IOKit/audio/IOAudioDevice.h>
 
@@ -9,7 +9,7 @@ class MyAudioDevice : public IOAudioDevice
 {
     OSDeclareDefaultStructors(MyAudioDevice);
     
-    virtual bool initHardware(IOService *provider) override;
+    virtual bool initHardware(IOService *provider) APPLE_KEXT_OVERRIDE;
     bool createAudioEngine();
     
     // Control callbacks
@@ -26,4 +26,4 @@ class MyAudioDevice : public IOAudioDevice
     virtual IOReturn inputMuteChanged(IOAudioControl *muteControl, SInt32 oldValue, SInt32 newValue);
 };
 
-#endif
+#endif /* MYAUDIODEVICE_H */

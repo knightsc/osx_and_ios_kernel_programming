@@ -1,10 +1,12 @@
-#include "MyFirstPCIDriver.hpp"
+#include <IOKit/IOLib.h>
+
+#include "MyFirstPCIDriver.h"
 
 #define super IOService
 
-OSDefineMetaClassAndStructors(com_osxkernel_MyFirstPCIDriver, IOService);
+OSDefineMetaClassAndStructors(MyFirstPCIDriver, IOService);
 
-bool com_osxkernel_MyFirstPCIDriver::start(IOService *provider)
+bool MyFirstPCIDriver::start(IOService *provider)
 {
     IOLog("%s::start\n", getName());
     
@@ -45,7 +47,7 @@ bool com_osxkernel_MyFirstPCIDriver::start(IOService *provider)
     return true;
 }
 
-void com_osxkernel_MyFirstPCIDriver::stop(IOService *provider)
+void MyFirstPCIDriver::stop(IOService *provider)
 {
     IOLog("%s::stop\n", getName());
     super::stop(provider);

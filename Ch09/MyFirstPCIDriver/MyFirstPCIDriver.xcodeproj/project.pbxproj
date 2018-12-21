@@ -7,13 +7,13 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		6F6C206F1E3F7023003840A6 /* MyFirstPCIDriver.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 6F6C206E1E3F7023003840A6 /* MyFirstPCIDriver.hpp */; };
+		6F6C206F1E3F7023003840A6 /* MyFirstPCIDriver.h in Headers */ = {isa = PBXBuildFile; fileRef = 6F6C206E1E3F7023003840A6 /* MyFirstPCIDriver.h */; };
 		6F6C20711E3F7023003840A6 /* MyFirstPCIDriver.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6F6C20701E3F7023003840A6 /* MyFirstPCIDriver.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		6F6C206B1E3F7023003840A6 /* MyFirstPCIDriver.kext */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MyFirstPCIDriver.kext; sourceTree = BUILT_PRODUCTS_DIR; };
-		6F6C206E1E3F7023003840A6 /* MyFirstPCIDriver.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = MyFirstPCIDriver.hpp; sourceTree = "<group>"; };
+		6F6C206E1E3F7023003840A6 /* MyFirstPCIDriver.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MyFirstPCIDriver.h; sourceTree = "<group>"; };
 		6F6C20701E3F7023003840A6 /* MyFirstPCIDriver.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = MyFirstPCIDriver.cpp; sourceTree = "<group>"; };
 		6F6C20721E3F7023003840A6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -48,8 +48,8 @@
 		6F6C206D1E3F7023003840A6 /* MyFirstPCIDriver */ = {
 			isa = PBXGroup;
 			children = (
-				6F6C206E1E3F7023003840A6 /* MyFirstPCIDriver.hpp */,
 				6F6C20701E3F7023003840A6 /* MyFirstPCIDriver.cpp */,
+				6F6C206E1E3F7023003840A6 /* MyFirstPCIDriver.h */,
 				6F6C20721E3F7023003840A6 /* Info.plist */,
 			);
 			path = MyFirstPCIDriver;
@@ -62,7 +62,7 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				6F6C206F1E3F7023003840A6 /* MyFirstPCIDriver.hpp in Headers */,
+				6F6C206F1E3F7023003840A6 /* MyFirstPCIDriver.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
