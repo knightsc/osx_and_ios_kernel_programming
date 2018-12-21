@@ -1,20 +1,21 @@
 #include <Foundation/Foundation.h>
 #include <IOKit/IOKitLib.h>
+
 #include "TestDriverInterface.h"
 
-kern_return_t StartTimer (io_connect_t connection)
+kern_return_t StartTimer(io_connect_t connection)
 {
     return IOConnectCallMethod(connection, kTestUserClientStartTimer,
                            NULL, 0, NULL, 0, NULL, NULL, NULL, NULL);
 }
 
-kern_return_t StopTimer (io_connect_t connection)
+kern_return_t StopTimer(io_connect_t connection)
 {
     return IOConnectCallMethod(connection, kTestUserClientStopTimer,
                                NULL, 0, NULL, 0, NULL, NULL, NULL, NULL);
 }
 
-kern_return_t GetElapsedTimerTime (io_connect_t connection, uint32_t* timerTime)
+kern_return_t GetElapsedTimerTime(io_connect_t connection, uint32_t *timerTime)
 {
     uint64_t scalarOut[1];
     uint32_t scalarOutCount;
@@ -32,13 +33,14 @@ kern_return_t GetElapsedTimerTime (io_connect_t connection, uint32_t* timerTime)
     return result;
 }
 
-kern_return_t   DelayForTime (io_connect_t connection, const TimerValue* timerValue)
+kern_return_t DelayForTime(io_connect_t connection, const TimerValue *timerValue)
 {
     return IOConnectCallStructMethod(connection, kTestUserClientDelayForTime,
                                      timerValue, sizeof(TimerValue), NULL, 0);
 }
 
-int main(int argc, const char * argv[]) {
+int main(int argc, const char *argv[])
+{
     @autoreleasepool {
         CFDictionaryRef matchingDict = NULL;
         io_service_t service = 0;
