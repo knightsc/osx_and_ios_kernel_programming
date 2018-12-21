@@ -10,8 +10,7 @@
 
 #define BUNDLE_ID   "com.osxkernel.AppWall"
 
-struct app_descriptor
-{
+struct app_descriptor {
     char name[PATH_MAX];
     unsigned long bytes_in;
     unsigned long bytes_out;
@@ -24,8 +23,7 @@ struct app_descriptor
 };
 
 #if defined (KERNEL)
-struct appwall_entry
-{
+struct appwall_entry {
     TAILQ_ENTRY(appwall_entry)   link;
     struct app_descriptor        desc;
     int                          users;

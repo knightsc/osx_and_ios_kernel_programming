@@ -7,19 +7,19 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		6FBD588121CAEDA200D06CBB /* MyEthernetDriver.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 6FBD588021CAEDA200D06CBB /* MyEthernetDriver.hpp */; };
+		6FBD588121CAEDA200D06CBB /* MyEthernetDriver.h in Headers */ = {isa = PBXBuildFile; fileRef = 6FBD588021CAEDA200D06CBB /* MyEthernetDriver.h */; };
 		6FBD588321CAEDA200D06CBB /* MyEthernetDriver.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6FBD588221CAEDA200D06CBB /* MyEthernetDriver.cpp */; };
 		6FBD588C21CAEDC900D06CBB /* MyEthernetHwAbstraction.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6FBD588A21CAEDC900D06CBB /* MyEthernetHwAbstraction.cpp */; };
-		6FBD588D21CAEDC900D06CBB /* MyEthernetHwAbstraction.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 6FBD588B21CAEDC900D06CBB /* MyEthernetHwAbstraction.hpp */; };
+		6FBD588D21CAEDC900D06CBB /* MyEthernetHwAbstraction.h in Headers */ = {isa = PBXBuildFile; fileRef = 6FBD588B21CAEDC900D06CBB /* MyEthernetHwAbstraction.h */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		6FBD587D21CAEDA200D06CBB /* MyEthernetDriver.kext */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MyEthernetDriver.kext; sourceTree = BUILT_PRODUCTS_DIR; };
-		6FBD588021CAEDA200D06CBB /* MyEthernetDriver.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = MyEthernetDriver.hpp; sourceTree = "<group>"; };
+		6FBD588021CAEDA200D06CBB /* MyEthernetDriver.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MyEthernetDriver.h; sourceTree = "<group>"; };
 		6FBD588221CAEDA200D06CBB /* MyEthernetDriver.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = MyEthernetDriver.cpp; sourceTree = "<group>"; };
 		6FBD588421CAEDA200D06CBB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		6FBD588A21CAEDC900D06CBB /* MyEthernetHwAbstraction.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = MyEthernetHwAbstraction.cpp; sourceTree = "<group>"; };
-		6FBD588B21CAEDC900D06CBB /* MyEthernetHwAbstraction.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = MyEthernetHwAbstraction.hpp; sourceTree = "<group>"; };
+		6FBD588B21CAEDC900D06CBB /* MyEthernetHwAbstraction.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MyEthernetHwAbstraction.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -53,9 +53,9 @@
 			isa = PBXGroup;
 			children = (
 				6FBD588221CAEDA200D06CBB /* MyEthernetDriver.cpp */,
-				6FBD588021CAEDA200D06CBB /* MyEthernetDriver.hpp */,
+				6FBD588021CAEDA200D06CBB /* MyEthernetDriver.h */,
 				6FBD588A21CAEDC900D06CBB /* MyEthernetHwAbstraction.cpp */,
-				6FBD588B21CAEDC900D06CBB /* MyEthernetHwAbstraction.hpp */,
+				6FBD588B21CAEDC900D06CBB /* MyEthernetHwAbstraction.h */,
 				6FBD588421CAEDA200D06CBB /* Info.plist */,
 			);
 			path = MyEthernetDriver;
@@ -68,8 +68,8 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				6FBD588121CAEDA200D06CBB /* MyEthernetDriver.hpp in Headers */,
-				6FBD588D21CAEDC900D06CBB /* MyEthernetHwAbstraction.hpp in Headers */,
+				6FBD588121CAEDA200D06CBB /* MyEthernetDriver.h in Headers */,
+				6FBD588D21CAEDC900D06CBB /* MyEthernetHwAbstraction.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

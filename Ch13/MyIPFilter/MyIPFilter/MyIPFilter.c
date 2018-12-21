@@ -9,8 +9,8 @@
 #include <netinet/udp.h>
 #include <netinet/kpi_ipfilter.h>
 
-kern_return_t MyIPFilter_start (kmod_info_t * ki, void * d);
-kern_return_t MyIPFilter_stop (kmod_info_t * ki, void * d);
+kern_return_t MyIPFilter_start (kmod_info_t *ki, void *d);
+kern_return_t MyIPFilter_stop (kmod_info_t *ki, void *d);
 
 enum {
     kMyFiltDirIn,
@@ -18,8 +18,7 @@ enum {
     kMyFiltNumDirs
 };
 
-struct myfilter_stats
-{
+struct myfilter_stats {
     unsigned long udp_packets[kMyFiltNumDirs];
     unsigned long tcp_packets[kMyFiltNumDirs];
     unsigned long icmp_packets[kMyFiltNumDirs];
@@ -31,13 +30,15 @@ static ipfilter_t g_filter_ref;
 static boolean_t g_filter_registered = FALSE;
 static boolean_t g_filter_detached = FALSE;
 
-static void log_ip_packet(mbuf_t *data, int dir)
+static void
+log_ip_packet(mbuf_t *data, int dir)
 {
     char src[32], dst[32];
-    struct ip *ip = (struct ip*)mbuf_data(*data);
+    struct ip *ip = (struct ip *)mbuf_data(*data);
     
-    if (ip->ip_v != 4)
+    if (ip->ip_v != 4) {
         return;
+    }
     
     bzero(src, sizeof(src));
     bzero(dst, sizeof(dst));
@@ -67,18 +68,20 @@ static void log_ip_packet(mbuf_t *data, int dir)
 
 //Uncomment to enable re-direction of IP packets to another address.
 /*
-static void myipfilter_update_cksum(mbuf_t data)
+static void
+myipfilter_update_cksum(mbuf_t data)
 {
     u_int16_t ip_sum;
     u_int16_t tsum;
-    struct tcphdr* tcp;
-    struct udphdr* udp;
+    struct tcphdr *tcp;
+    struct udphdr *udp;
     
-    unsigned char *ptr = (unsigned char*)mbuf_data(data);
+    unsigned char *ptr = (unsigned char *)mbuf_data(data);
     
-    struct ip *ip = (struct ip*)ptr;
-    if (ip->ip_v != 4)
+    struct ip *ip = (struct ip *)ptr;
+    if (ip->ip_v != 4) {
         return;
+    }
     
     ip->ip_sum = 0;
     mbuf_inet_cksum(data, 0, 0, ip->ip_hl << 2, &ip_sum); // ip sum
@@ -104,22 +107,23 @@ static void myipfilter_update_cksum(mbuf_t data)
     mbuf_clear_csum_performed(data); // Needed?
 }
 
-static errno_t myipfilter_output_redirect(void *cookie, mbuf_t *data, ipf_pktopts_t options)
+static errno_t
+myipfilter_output_redirect(void *cookie, mbuf_t *data, ipf_pktopts_t options)
 {
     struct in_addr addr_old;
     struct in_addr addr_new;
     int ret;
     
-    struct ip *ip = (struct ip*)mbuf_data(*data);
-    if (ip->ip_v != 4)
+    struct ip *ip = (struct ip *)mbuf_data(*data);
+    if (ip->ip_v != 4) {
         return 0;
+    }
     
     addr_old.s_addr = htonl(134744072); // 8.8.8.8
     addr_new.s_addr = htonl(167837964); // 10.1.1.12 (replace with own IP)
     
     // redirect packets to 8.8.8.8 to the IP address 10.1.1.12.
-    if (ip->ip_dst.s_addr == addr_old.s_addr)
-    {
+    if (ip->ip_dst.s_addr == addr_old.s_addr) {
         ip->ip_dst = addr_new;
         myipfilter_update_cksum(*data);
         ret = ipf_inject_output(*data, g_filter_ref, options);
@@ -128,21 +132,22 @@ static errno_t myipfilter_output_redirect(void *cookie, mbuf_t *data, ipf_pktopt
     return 0;
 }
 
-static errno_t myipfilter_input_redirect(void *cookie, mbuf_t *data, int offset, u_int8_t protocol)
+static errno_t
+myipfilter_input_redirect(void *cookie, mbuf_t *data, int offset, u_int8_t protocol)
 {
     struct in_addr addr_old;
     struct in_addr addr_new;
     int ret;
     
     struct ip *ip = (struct ip*)mbuf_data(*data);
-    if (ip->ip_v != 4)
+    if (ip->ip_v != 4) {
         return 0;
+    }
     addr_new.s_addr = htonl(134744072); // 8.8.8.8
     addr_old.s_addr = htonl(167837964); // 10.1.1.12 (replace with own IP)
     
     // redirect packets to 8.8.8.8 to the IP address 10.1.1.12.
-    if (ip->ip_src.s_addr == addr_old.s_addr)
-    {
+    if (ip->ip_src.s_addr == addr_old.s_addr) {
         ip->ip_src = addr_new;
         // re-inject modified packet.
         myipfilter_update_cksum(*data);
@@ -155,23 +160,28 @@ static errno_t myipfilter_input_redirect(void *cookie, mbuf_t *data, int offset,
 */
 
 
-static errno_t myipfilter_output(void *cookie, mbuf_t *data, ipf_pktopts_t options)
+static errno_t
+myipfilter_output(void *cookie, mbuf_t *data, ipf_pktopts_t options)
 {
-    if (data)
+    if (data) {
         log_ip_packet(data, kMyFiltDirOut);
+    }
     //return myipfilter_output_redirect(cookie, data, options);
     return 0;
 }
 
-static errno_t myipfilter_input(void *cookie, mbuf_t *data, int offset, u_int8_t protocol)
+static errno_t
+myipfilter_input(void *cookie, mbuf_t *data, int offset, u_int8_t protocol)
 {
-    if (data)
+    if (data) {
         log_ip_packet(data, kMyFiltDirIn);
+    }
     //return myipfilter_input_redirect(cookie, data, offset, protocol);
     return 0;
 }
 
-static void myipfilter_detach(void *cookie)
+static void
+myipfilter_detach(void *cookie)
 {
     /* cookie isn't dynamically allocated, no need to free in this case */
     struct myfilter_stats* stats = (struct myfilter_stats*)cookie;
@@ -196,31 +206,34 @@ static struct ipf_filter g_my_ip_filter = {
     myipfilter_detach
 };
 
-kern_return_t MyIPFilter_start (kmod_info_t * ki, void * d) {
-    
+kern_return_t
+MyIPFilter_start(kmod_info_t *ki, void *d)
+{
     int result;
     
     bzero(&g_filter_stats, sizeof(struct myfilter_stats));
     
     result = ipf_addv4(&g_my_ip_filter, &g_filter_ref);
     
-    if (result == KERN_SUCCESS)
+    if (result == KERN_SUCCESS) {
         g_filter_registered = TRUE;
+    }
     
     return result;
 }
 
-kern_return_t MyIPFilter_stop (kmod_info_t * ki, void * d) {
-    
-    if (g_filter_registered)
-    {
+kern_return_t
+MyIPFilter_stop(kmod_info_t *ki, void *d)
+{
+    if (g_filter_registered) {
         ipf_remove(g_filter_ref);
         g_filter_registered = FALSE;
         
     }
     /* We need to ensure filter is detached before we return */
-    if (!g_filter_detached)
+    if (!g_filter_detached) {
         return EAGAIN; // Try unloading again.
+    }
     
     return KERN_SUCCESS;
 }

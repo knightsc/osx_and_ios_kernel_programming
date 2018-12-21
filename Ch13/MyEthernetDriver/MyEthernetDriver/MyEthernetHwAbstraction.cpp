@@ -6,40 +6,45 @@
 #include <netinet/in.h>
 #include <netinet/ip.h>
 #include <net/ethernet.h>
-#include "MyEthernetDriver.hpp"
-#include "MyEthernetHwAbstraction.hpp"
+
+#include "MyEthernetDriver.h"
+#include "MyEthernetHwAbstraction.h"
 
 #define super OSObject
 
-interface_filter_t          gFilterReference;
+OSDefineMetaClassAndStructors(MyEthernetHwAbstraction, OSObject);
+
+interface_filter_t gFilterReference;
 
 static errno_t interfaceFilterPacketRecvived(void *cookie, ifnet_t interface, protocol_family_t protocol, mbuf_t *data, char **frame_ptr)
 {
-    com_osxkernel_MyEthernetHwAbstraction* hwAbtraction = (com_osxkernel_MyEthernetHwAbstraction*)cookie;
+    MyEthernetHwAbstraction *hwAbtraction = (MyEthernetHwAbstraction *)cookie;
     
-    if (!hwAbtraction || ifnet_hdrlen(interface) != ETHER_HDR_LEN)
+    if (!hwAbtraction || ifnet_hdrlen(interface) != ETHER_HDR_LEN) {
         return 0;
+    }
     
-    if (!hwAbtraction->handleIncomingPacket(*data, frame_ptr))
+    if (!hwAbtraction->handleIncomingPacket(*data, frame_ptr)) {
         return EPERM;
+    }
     
     return 0;
 }
 
 static void interfaceFilterDetached(void *cookie, ifnet_t interface)
 {
-    com_osxkernel_MyEthernetHwAbstraction* hwAbtraction = (com_osxkernel_MyEthernetHwAbstraction*)cookie;
-    if (!hwAbtraction)
+    MyEthernetHwAbstraction *hwAbtraction = (MyEthernetHwAbstraction *)cookie;
+    if (!hwAbtraction) {
         return;
+    }
     hwAbtraction->filterDisabled();
 }
 
-OSDefineMetaClassAndStructors(com_osxkernel_MyEthernetHwAbstraction, OSObject);
-
-bool    com_osxkernel_MyEthernetHwAbstraction::init(com_osxkernel_MyEthernetDriver* drv)
+bool MyEthernetHwAbstraction::init(MyEthernetDriver *drv)
 {
-    if (!super::init())
+    if (!super::init()) {
         return false;
+    }
     
     fDriver = drv;
     
@@ -74,35 +79,39 @@ bool    com_osxkernel_MyEthernetHwAbstraction::init(com_osxkernel_MyEthernetDriv
     return true;
 }
 
-void    com_osxkernel_MyEthernetHwAbstraction::free()
+void MyEthernetHwAbstraction::free()
 {
     super::free();
 }
 
-bool    com_osxkernel_MyEthernetHwAbstraction::enableHardware()
+bool MyEthernetHwAbstraction::enableHardware()
 {
     bool success = true;
     
     fRxPacketQueue = IOPacketQueue::withCapacity();
-    if (!fRxPacketQueue)
+    if (!fRxPacketQueue) {
         return false;
+    }
     
-    if (ifnet_find_by_name("en0", &interface) != KERN_SUCCESS) // change to your own interface
+    // change to your own interface
+    if (ifnet_find_by_name("en0", &interface) != KERN_SUCCESS) {
         return false;
+    }
     
     ifnet_set_promiscuous(interface, 1);
     
-    if (iflt_attach(interface, &interfaceFilter, &gFilterReference) != KERN_SUCCESS)
+    if (iflt_attach(interface, &interfaceFilter, &gFilterReference) != KERN_SUCCESS) {
         success = false;
+    }
     
     filterRegistered = true;
     return success;
 }
 
-UInt32    com_osxkernel_MyEthernetHwAbstraction::readRegister32(UInt32 offset)
+UInt32 MyEthernetHwAbstraction::readRegister32(UInt32 offset)
 {
     UInt32 value;
-    UInt8* ptr = (UInt8*)&fRegisterMap;
+    UInt8 *ptr = (UInt8 *)&fRegisterMap;
     if (offset > sizeof(MyEthernetDeviceRegisters) - sizeof(UInt32))
         return 0;
     ptr += offset;
@@ -115,27 +124,27 @@ UInt32    com_osxkernel_MyEthernetHwAbstraction::readRegister32(UInt32 offset)
     return value;
 }
 
-UInt8    com_osxkernel_MyEthernetHwAbstraction::readRegister8(UInt32 offset)
+UInt8 MyEthernetHwAbstraction::readRegister8(UInt32 offset)
 {
     UInt8 value;
-    UInt8* ptr = (UInt8*)&fRegisterMap;
-    if (offset > sizeof(MyEthernetDeviceRegisters) - sizeof(UInt32))
+    UInt8 *ptr = (UInt8 *)&fRegisterMap;
+    if (offset > sizeof(MyEthernetDeviceRegisters) - sizeof(UInt32)) {
         return 0;
+    }
     ptr += offset;
     
     value = (UInt8)*ptr;
     // The interrupt register is cleared automatically upon reading.
-    if (offset == kMyInterruptStatusRegisterOffset)
+    if (offset == kMyInterruptStatusRegisterOffset) {
         fRegisterMap.interruptStatusRegister = 0;
+    }
     
     return value;
 }
 
-void    com_osxkernel_MyEthernetHwAbstraction::disableHardware()
+void MyEthernetHwAbstraction::disableHardware()
 {
-    
-    if (filterRegistered == true)
-    {
+    if (filterRegistered == true) {
         iflt_detach(gFilterReference);
         while (filterRegistered);
         
@@ -148,46 +157,42 @@ void    com_osxkernel_MyEthernetHwAbstraction::disableHardware()
     }
 }
 
-void    com_osxkernel_MyEthernetHwAbstraction::filterDisabled()
+void MyEthernetHwAbstraction::filterDisabled()
 {
     filterRegistered = false;
 }
 
-bool    com_osxkernel_MyEthernetHwAbstraction::handleIncomingPacket(mbuf_t packet, char** framePtr)
+bool MyEthernetHwAbstraction::handleIncomingPacket(mbuf_t packet, char** framePtr)
 {
     bool passPacketToCaller = true;
     bool copyPacket = false;
     
     struct ether_header *hdr = (struct ether_header*)*framePtr;
-    if (!hdr)
+    if (!hdr) {
         return false;
+    }
     
     //
     // We only accept packets routed to us if it is addressed to our Mac address,
     // the broadcast or a multicast address.
     //
-    if (memcmp(&fMacBcastAddress.bytes, &hdr->ether_dhost, ETHER_ADDR_LEN) == 0)
-    {
+    if (memcmp(&fMacBcastAddress.bytes, &hdr->ether_dhost, ETHER_ADDR_LEN) == 0) {
         copyPacket = true;
     }
-    else if (memcmp(&fRegisterMap.address, &hdr->ether_dhost, ETHER_ADDR_LEN) == 0)
-    {
+    else if (memcmp(&fRegisterMap.address, &hdr->ether_dhost, ETHER_ADDR_LEN) == 0) {
         passPacketToCaller = false; // Belongs to our interface.
         copyPacket = true;
     }
-    else if (hdr->ether_dhost[0] & 0x01) // multicast
-    {
+    else if (hdr->ether_dhost[0] & 0x01) { // multicast
         copyPacket = true;
     }
     
-    if (copyPacket)
-    {
+    if (copyPacket) {
         mbuf_t newPacket;
         newPacket = fDriver->allocatePacket((UInt32)mbuf_pkthdr_len(packet) + ETHER_HDR_LEN);
         
-        if (newPacket)
-        {
-            unsigned char* data = (unsigned char*)mbuf_data(newPacket);
+        if (newPacket) {
+            unsigned char * data = (unsigned char *)mbuf_data(newPacket);
             bcopy(*framePtr, data, ETHER_HDR_LEN);
             data += ETHER_HDR_LEN;
             mbuf_copydata(packet, 0, mbuf_pkthdr_len(packet),data);
@@ -203,10 +208,11 @@ bool    com_osxkernel_MyEthernetHwAbstraction::handleIncomingPacket(mbuf_t packe
     return passPacketToCaller;
 }
 
-IOReturn    com_osxkernel_MyEthernetHwAbstraction::transmitPacketToHardware(mbuf_t packet)
+IOReturn MyEthernetHwAbstraction::transmitPacketToHardware(mbuf_t packet)
 {
-    if (ifnet_output_raw(interface, 0, packet) != KERN_SUCCESS)
+    if (ifnet_output_raw(interface, 0, packet) != KERN_SUCCESS) {
         return kIOReturnOutputDropped;
+    }
     
     // Raise an interrupt to the driver to inform it the packet was sent.
     fRegisterMap.interruptStatusRegister |= kTXInterruptPending;
@@ -215,9 +221,10 @@ IOReturn    com_osxkernel_MyEthernetHwAbstraction::transmitPacketToHardware(mbuf
     return kIOReturnSuccess;
 }
 
-mbuf_t  com_osxkernel_MyEthernetHwAbstraction::receivePacketFromHardware()
+mbuf_t MyEthernetHwAbstraction::receivePacketFromHardware()
 {
-    if (!fRxPacketQueue)
+    if (!fRxPacketQueue) {
         return NULL;
+    }
     return fRxPacketQueue->lockDequeue();
 }
