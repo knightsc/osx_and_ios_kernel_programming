@@ -1,7 +1,9 @@
 #include <Foundation/Foundation.h>
+
 #include "TestDriverInterface.h"
 
-int main(int argc, const char * argv[]) {
+int main(int argc, const char * argv[])
+{
     @autoreleasepool {
         CFDictionaryRef matchingDict = NULL;
         io_service_t service = 0;

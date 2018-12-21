@@ -1,9 +1,10 @@
-#include "IOKitTest.hpp"
 #include <IOKit/IOLib.h>
+
+#include "IOKitTest.h"
 
 #define super IOService
 
-OSDefineMetaClassAndStructors(com_osxkernel_driver_IOKitTest, IOService)
+OSDefineMetaClassAndStructors(IOKitTest, IOService)
 
 enum {
     kOffPowerState,
@@ -46,15 +47,18 @@ enum {
 static IOPMPowerState gPowerStates[kNumPowerStates] = {
     // kOffPowerState
     {kIOPMPowerStateVersion1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+    
     // kStandbyPowerState
     {kIOPMPowerStateVersion1, kIOPMPowerOn, kIOPMPowerOn, kIOPMPowerOn, 0, 0, 0, 0, 0, 0, 0},
+    
     // kIdlePowerState
     {kIOPMPowerStateVersion1, kIOPMPowerOn, kIOPMPowerOn, kIOPMPowerOn, 0, 0, 0, 0, 0, 0, 0},
+    
     // kOnPowerState
     {kIOPMPowerStateVersion1, (kIOPMPowerOn | kIOPMDeviceUsable), kIOPMPowerOn, kIOPMPowerOn, 0, 0, 0, 0, 0, 0, 0, 0}
 };
 
-bool com_osxkernel_driver_IOKitTest::start (IOService *provider)
+bool IOKitTest::start(IOService *provider)
 {
     IOLog("IOKitTest::start\n");
     
@@ -81,14 +85,14 @@ bool com_osxkernel_driver_IOKitTest::start (IOService *provider)
     return true;
 }
 
-void com_osxkernel_driver_IOKitTest::stop (IOService *provider)
+void IOKitTest::stop(IOService *provider)
 {
     IOLog("IOKitTest::stop\n");
     PMstop();
     super::stop(provider);
 }
 
-void com_osxkernel_driver_IOKitTest::free()
+void IOKitTest::free()
 {
     IOLog("IOKitTest::free\n");
 
@@ -101,7 +105,7 @@ void com_osxkernel_driver_IOKitTest::free()
 
 
 
-IOReturn com_osxkernel_driver_IOKitTest::setPowerState(unsigned long powerStateOrdinal, IOService *whatDevice)
+IOReturn IOKitTest::setPowerState(unsigned long powerStateOrdinal, IOService *whatDevice)
 {
     IOLog("IOKitTest::setPowerState(0x%lx)\n", powerStateOrdinal);
     
@@ -132,19 +136,19 @@ IOReturn com_osxkernel_driver_IOKitTest::setPowerState(unsigned long powerStateO
     return kIOPMAckImplied;
 }
 
-IOReturn com_osxkernel_driver_IOKitTest::powerStateWillChangeTo(IOPMPowerFlags capabilities, unsigned long stateNumber, IOService *whatDevice)
+IOReturn IOKitTest::powerStateWillChangeTo(IOPMPowerFlags capabilities, unsigned long stateNumber, IOService *whatDevice)
 {
     IOLog("IOKitTest::powerStateWillChangeTo(0x%lx)\n", stateNumber);
     return IOPMAckImplied;
 }
 
-IOReturn com_osxkernel_driver_IOKitTest::powerStateDidChangeTo(IOPMPowerFlags capabilities, unsigned long stateNumber, IOService *whatDevice)
+IOReturn IOKitTest::powerStateDidChangeTo(IOPMPowerFlags capabilities, unsigned long stateNumber, IOService *whatDevice)
 {
     IOLog("IOKitTest::powerStateDidChangeTo(0x%lx)\n", stateNumber);
     return IOPMAckImplied;
 }
 
-void com_osxkernel_driver_IOKitTest::powerChangeDone(unsigned long stateNumber)
+void IOKitTest::powerChangeDone(unsigned long stateNumber)
 {
     // Wake up threads waiting on power state change
     IOLog("IOKitTest::powerChangeDone(0x%lx)\n", stateNumber);
@@ -152,7 +156,7 @@ void com_osxkernel_driver_IOKitTest::powerChangeDone(unsigned long stateNumber)
 }
 
 // Sample Device Operation
-IOReturn com_osxkernel_driver_IOKitTest::myReadDataFromDevice()
+IOReturn IOKitTest::myReadDataFromDevice()
 {
     // Ensure the device is in the on power state
     IOLockLock(m_lock);

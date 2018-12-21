@@ -1,5 +1,5 @@
-#ifndef TestDriverInterface_h
-#define TestDriverInterface_h
+#ifndef TESTDRIVERINTERFACE_H
+#define TESTDRIVERINTERFACE_H
 
 // Control request codes for user client methods.
 enum TimerRequestCode {
@@ -7,4 +7,4 @@ enum TimerRequestCode {
         kTestUserClientMethodCount
 };
 
-#endif /* TestDriverInterface_h */
+#endif /* TESTDRIVERINTERFACE_H */
